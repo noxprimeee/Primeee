@@ -307,3 +307,852 @@
             .sidebar {
                 width: 100%;
                 height: auto;
+                position: relative;
+                margin-left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid,
+            .servers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-server"></i>
+            <span>Primeee Host</span>
+        </div>
+        
+        <ul class="nav-menu">
+            <li><a href="#" class="active" onclick="showSection('dashboard')">
+                <i class="fas fa-home"></i> Dashboard
+            </a></li>
+            <li><a href="#" onclick="showSection('servers')">
+                <i class="fas fa-server"></i> Mes Serveurs
+            </a></li>
+            <li><a href="#" onclick="showSection('create-server')">
+                <i class="fas fa-plus-circle"></i> Créer Serveur
+            </a></li>
+            <li><a href="#" onclick="showSection('coins')">
+                <i class="fas fa-coins"></i> Mes Pièces
+            </a></li>
+            <li><a href="#" onclick="showSection('referral')">
+                <i class="fas fa-user-friends"></i> Parrainage
+            </a></li>
+            <li><a href="#" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i> Paramètres
+            </a></li>
+            <li><a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a></li>
+        </ul>
+        
+        <div style="margin-top: 30px; color: #95a5a6; font-size: 0.8rem;">
+            <p>© 2024 Primeee Host</p>
+            <p>Version 2.0</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="user-info">
+                <div class="coins">
+                    <i class="fas fa-coins"></i>
+                    <span id="user-coins">1000</span> pièces
+                </div>
+                <div id="user-greeting">Chargement...</div>
+            </div>
+        </div>
+        
+        <!-- Sections -->
+        <div id="sections">
+            <!-- Dashboard -->
+            <section id="dashboard-section" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #3498db;">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-servers">0</h3>
+                            <p>Serveurs actifs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #2ecc71;">
+                            <i class="fas fa-memory"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-ram">0 MB</h3>
+                            <p>RAM totale</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #f39c12;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-uptime">0h</h3>
+                            <p>Uptime total</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #9b59b6;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-referrals">0</h3>
+                            <p>Filleuls</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 style="margin: 30px 0 15px;">Serveurs Récents</h2>
+                <div id="recent-servers" class="servers-grid">
+                    <!-- Chargé dynamiquement -->
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #2c3e50; border-radius: 10px;">
+                    <h3><i class="fas fa-gift"></i> Bonus Quotidien</h3>
+                    <p>Revenez chaque jour pour recevoir des pièces gratuites !</p>
+                    <button class="btn btn-success" onclick="claimDailyBonus()">
+                        <i class="fas fa-gift"></i> Recevoir le bonus
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Mes Serveurs -->
+            <section id="servers-section" class="section" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Mes Serveurs</h2>
+                    <button class="btn btn-primary" onclick="showSection('create-server')">
+                        <i class="fas fa-plus"></i> Nouveau Serveur
+                    </button>
+                </div>
+                
+                <div id="servers-list" class="servers-grid">
+                    <!-- Chargé dynamiquement -->
+                </div>
+            </section>
+            
+            <!-- Créer Serveur -->
+            <section id="create-server-section" class="section" style="display: none;">
+                <h2>Créer un Nouveau Serveur</h2>
+                <p style="margin-bottom: 20px; color: #95a5a6;">
+                    Chaque 1000 pièces = 1GB de RAM. Vous avez <span id="available-coins">1000</span> pièces.
+                </p>
+                
+                <div class="form-group">
+                    <label>Nom du Serveur</label>
+                    <input type="text" id="server-name" class="form-control" placeholder="Mon Bot Discord">
+                </div>
+                
+                <div class="form-group">
+                    <label>Type de Serveur</label>
+                    <select id="server-type" class="form-control">
+                        <option value="discord">🤖 Bot Discord</option>
+                        <option value="whatsapp">📱 Bot WhatsApp</option>
+                        <option value="telegram">📲 Bot Telegram</option>
+                        <option value="website">🌐 Site Web</option>
+                        <option value="api">⚡ API Backend</option>
+                        <option value="game">🎮 Serveur Jeu</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>RAM (MB) - Coût: <span id="ram-cost">0</span> pièces</label>
+                    <input type="range" id="server-ram" min="512" max="8192" step="512" value="1024" 
+                           class="form-control" oninput="updateRamCost()">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>512MB</span>
+                        <span id="ram-value">1024</span> MB
+                        <span>8192MB</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Stockage (MB)</label>
+                    <input type="number" id="server-disk" class="form-control" value="5120" min="1024" max="51200">
+                </div>
+                
+                <div class="form-group">
+                    <label>Limite CPU (%)</label>
+                    <input type="number" id="server-cpu" class="form-control" value="100" min="10" max="200">
+                </div>
+                
+                <button class="btn btn-success btn-block" onclick="createServer()">
+                    <i class="fas fa-plus-circle"></i> Créer le Serveur
+                </button>
+            </section>
+            
+            <!-- Mes Pièces -->
+            <section id="coins-section" class="section" style="display: none;">
+                <h2>Économie de Pièces</h2>
+                
+                <div style="background: #2c3e50; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3><i class="fas fa-wallet"></i> Mon Portefeuille</h3>
+                    <div style="font-size: 2rem; font-weight: bold; color: #f39c12; margin: 10px 0;">
+                        <i class="fas fa-coins"></i> <span id="wallet-coins">1000</span> pièces
+                    </div>
+                    <p>1GB RAM = 1000 pièces</p>
+                </div>
+                
+                <h3>Comment gagner des pièces ?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div style="background: #34495e; padding: 15px; border-radius: 8px;">
+                        <h4><i class="fas fa-user-plus"></i> Parrainage</h4>
+                        <p>+100 pièces par filleul</p>
+                        <button class="btn btn-primary" onclick="showSection('referral')">
+                            Voir mon lien
+                        </button>
+                    </div>
+                    
+                    <div style="background: #34495e; padding: 15px; border-radius: 8px;">
+                        <h4><i class="fas fa-calendar-day"></i> Quotidien</h4>
+                        <p>+10 pièces chaque jour</p>
+                        <button class="btn btn-success" onclick="claimDailyBonus()">
+                            Recevoir
+                        </button>
+                    </div>
+                    
+                    <div style="background: #34495e; padding: 15px; border-radius: 8px;">
+                        <h4><i class="fas fa-server"></i> Serveurs Actifs</h4>
+                        <p>+1 pièce par serveur/jour</p>
+                    </div>
+                    
+                    <div style="background: #34495e; padding: 15px; border-radius: 8px;">
+                        <h4><i class="fab fa-github"></i> GitHub</h4>
+                        <p>+500 pièces pour un repo</p>
+                    </div>
+                </div>
+                
+                <h3>Historique des Transactions</h3>
+                <div id="transactions-list" style="margin-top: 15px;">
+                    <!-- Chargé dynamiquement -->
+                </div>
+            </section>
+            
+            <!-- Parrainage -->
+            <section id="referral-section" class="section" style="display: none;">
+                <h2>Système de Parrainage</h2>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                            padding: 30px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: white;"><i class="fas fa-user-friends"></i> Gagnez 100 pièces par ami !</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin: 10px 0;">
+                        Partagez votre lien et recevez 100 pièces pour chaque ami qui s'inscrit.
+                    </p>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <h4 style="color: white;">Votre lien de parrainage :</h4>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <input type="text" id="referral-link" class="form-control" readonly 
+                                   style="background: white; color: #333;">
+                            <button class="btn btn-success" onclick="copyReferralLink()">
+                                <i class="fas fa-copy"></i> Copier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div style="background: #2c3e50; padding: 20px; border-radius: 10px;">
+                        <h4><i class="fas fa-trophy"></i> Vos Statistiques</h4>
+                        <div style="margin-top: 15px;">
+                            <p>Filleuls totaux : <strong id="total-referrals-count">0</strong></p>
+                            <p>Pièces gagnées : <strong id="referral-earnings">0</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #2c3e50; padding: 20px; border-radius: 10px;">
+                        <h4><i class="fas fa-code"></i> Code de parrainage</h4>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #3498db; margin: 10px 0;">
+                            <span id="referral-code">PRIME123</span>
+                        </div>
+                        <p>Donnez ce code à vos amis lors de l'inscription</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Vos Filleuls</h3>
+                <div id="referrals-list" style="margin-top: 15px;">
+                    <!-- Chargé dynamiquement -->
+                </div>
+            </section>
+            
+            <!-- Paramètres -->
+            <section id="settings-section" class="section" style="display: none;">
+                <h2>Paramètres du Compte</h2>
+                
+                <div style="max-width: 500px;">
+                    <div class="form-group">
+                        <label>Nom d'utilisateur</label>
+                        <input type="text" id="settings-username" class="form-control" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="settings-email" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                        <input type="password" id="settings-password" class="form-control">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="updateSettings()">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div id="server-control-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Contrôle Serveur</h3>
+                <button class="close-modal" onclick="closeModal('server-control-modal')">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Contenu dynamique -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Variables globales
+        let currentUser = null;
+        let currentToken = null;
+        
+        // Vérifier la connexion au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('primeee_token');
+            const user = localStorage.getItem('primeee_user');
+            
+            if (!token || !user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentToken = token;
+            currentUser = JSON.parse(user);
+            
+            // Mettre à jour l'interface
+            updateUserInfo();
+            loadDashboard();
+            
+            // Charger les serveurs
+            loadServers();
+            loadTransactions();
+            loadReferrals();
+        });
+        
+        // Mettre à jour les infos utilisateur
+        function updateUserInfo() {
+            if (!currentUser) return;
+            
+            document.getElementById('user-coins').textContent = currentUser.coins || 0;
+            document.getElementById('user-greeting').textContent = `Bonjour, ${currentUser.username}`;
+            document.getElementById('available-coins').textContent = currentUser.coins || 0;
+            document.getElementById('wallet-coins').textContent = currentUser.coins || 0;
+            document.getElementById('settings-username').value = currentUser.username;
+            document.getElementById('settings-email').value = currentUser.email;
+            
+            // Lien de parrainage
+            if (currentUser.referral_code) {
+                const link = `${window.location.origin}/register.html?ref=${currentUser.referral_code}`;
+                document.getElementById('referral-link').value = link;
+                document.getElementById('referral-code').textContent = currentUser.referral_code;
+            }
+        }
+        
+        // Navigation entre sections
+        function showSection(sectionId) {
+            // Cacher toutes les sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Désactiver tous les liens
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Afficher la section demandée
+            const section = document.getElementById(`${sectionId}-section`);
+            if (section) {
+                section.style.display = 'block';
+                
+                // Activer le lien correspondant
+                const link = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+                if (link) link.classList.add('active');
+                
+                // Mettre à jour le titre
+                const titles = {
+                    'dashboard': 'Dashboard',
+                    'servers': 'Mes Serveurs',
+                    'create-server': 'Créer un Serveur',
+                    'coins': 'Mes Pièces',
+                    'referral': 'Parrainage',
+                    'settings': 'Paramètres'
+                };
+                
+                document.getElementById('page-title').textContent = titles[sectionId] || 'Dashboard';
+                
+                // Actions spécifiques
+                if (sectionId === 'dashboard') {
+                    loadDashboard();
+                } else if (sectionId === 'servers') {
+                    loadServers();
+                } else if (sectionId === 'coins') {
+                    loadTransactions();
+                } else if (sectionId === 'referral') {
+                    loadReferrals();
+                }
+            }
+            
+            return false;
+        }
+        
+        // Charger le dashboard
+        async function loadDashboard() {
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Mettre à jour les stats
+                    document.getElementById('total-servers').textContent = data.user.server_count || 0;
+                    document.getElementById('total-ram').textContent = `${data.user.total_ram || 0} MB`;
+                    document.getElementById('total-uptime').textContent = `${Math.floor((data.user.total_uptime || 0) / 3600)}h`;
+                    document.getElementById('total-referrals').textContent = data.user.total_invites || 0;
+                    
+                    // Mettre à jour les pièces
+                    if (data.user.coins !== undefined) {
+                        currentUser.coins = data.user.coins;
+                        localStorage.setItem('primeee_user', JSON.stringify(currentUser));
+                        updateUserInfo();
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur chargement dashboard:', error);
+            }
+        }
+        
+        // Charger les serveurs
+        async function loadServers() {
+            try {
+                const response = await fetch('/api/servers', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const container = document.getElementById('servers-list');
+                    const recentContainer = document.getElementById('recent-servers');
+                    
+                    if (!container || !recentContainer) return;
+                    
+                    container.innerHTML = '';
+                    recentContainer.innerHTML = '';
+                    
+                    if (data.servers.length === 0) {
+                        container.innerHTML = `
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                                <i class="fas fa-server" style="font-size: 3rem; color: #7f8c8d;"></i>
+                                <h3 style="margin: 20px 0 10px;">Aucun serveur</h3>
+                                <p>Créez votre premier serveur pour commencer !</p>
+                                <button class="btn btn-primary" onclick="showSection('create-server')">
+                                    <i class="fas fa-plus"></i> Créer un serveur
+                                </button>
+                            </div>
+                        `;
+                        
+                        recentContainer.innerHTML = `
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 20px; color: #95a5a6;">
+                                Aucun serveur récent
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Afficher tous les serveurs
+                    data.servers.forEach(server => {
+                        container.innerHTML += createServerCard(server);
+                    });
+                    
+                    // Afficher les 4 serveurs les plus récents dans le dashboard
+                    const recentServers = data.servers.slice(0, 4);
+                    recentServers.forEach(server => {
+                        recentContainer.innerHTML += createServerCard(server);
+                    });
+                }
+            } catch (error) {
+                console.error('Erreur chargement serveurs:', error);
+            }
+        }
+        
+        // Créer une carte serveur
+        function createServerCard(server) {
+            const statusClass = {
+                'running': 'status-online',
+                'stopped': 'status-offline',
+                'installing': 'status-installing',
+                'error': 'status-offline'
+            }[server.status] || 'status-offline';
+            
+            const statusText = {
+                'running': 'EN LIGNE',
+                'stopped': 'ARRÊTÉ',
+                'installing': 'INSTALLATION',
+                'error': 'ERREUR'
+            }[server.status] || 'INCONNU';
+            
+            const typeIcons = {
+                'discord': 'fab fa-discord',
+                'whatsapp': 'fab fa-whatsapp',
+                'telegram': 'fab fa-telegram',
+                'website': 'fas fa-globe',
+                'api': 'fas fa-code',
+                'game': 'fas fa-gamepad'
+            };
+            
+            return `
+                <div class="server-card">
+                    <div class="server-header">
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 10px;">
+                                <i class="${typeIcons[server.type] || 'fas fa-server'}"></i>
+                                ${server.name}
+                            </h3>
+                        </div>
+                        <span class="server-status ${statusClass}">${statusText}</span>
+                    </div>
+                    
+                    <div class="server-body">
+                        <div class="server-specs">
+                            <div class="spec-item">
+                                <div class="spec-value">${server.allocated_ram}MB</div>
+                                <div class="spec-label">RAM</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">${server.allocated_disk}MB</div>
+                                <div class="spec-label">DISK</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-value">${server.cpu_limit}%</div>
+                                <div class="spec-label">CPU</div>
+                            </div>
+                        </div>
+                        
+                        <div class="server-actions">
+                            ${server.status === 'running' ? `
+                                <button class="btn btn-danger" onclick="controlServer(${server.id}, 'stop')">
+                                    <i class="fas fa-stop"></i> Stop
+                                </button>
+                                <button class="btn btn-warning" onclick="controlServer(${server.id}, 'restart')">
+                                    <i class="fas fa-redo"></i> Restart
+                                </button>
+                            ` : `
+                                <button class="btn btn-success" onclick="controlServer(${server.id}, 'start')">
+                                    <i class="fas fa-play"></i> Start
+                                </button>
+                            `}
+                            
+                            <button class="btn btn-primary" onclick="openServerControl(${server.id})">
+                                <i class="fas fa-cog"></i> Gérer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Contrôler un serveur
+        async function controlServer(serverId, action) {
+            if (!confirm(`Êtes-vous sûr de vouloir ${action} ce serveur ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/servers/${serverId}/control`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Serveur ${action} avec succès !`);
+                    loadServers();
+                    loadDashboard();
+                } else {
+                    alert(data.error || 'Erreur');
+                }
+            } catch (error) {
+                console.error('Erreur contrôle serveur:', error);
+                alert('Erreur de connexion');
+            }
+        }
+        
+        // Ouvrir le modal de contrôle serveur
+        function openServerControl(serverId) {
+            // Pour l'instant, simple redirection vers le panel de contrôle
+            // TODO: Implémenter le panel complet
+            alert(`Panel de contrôle pour le serveur ${serverId} - À implémenter`);
+        }
+        
+        // Calculer le coût de la RAM
+        function updateRamCost() {
+            const ram = document.getElementById('server-ram').value;
+            const cost = (ram / 1024) * 1000;
+            
+            document.getElementById('ram-value').textContent = ram;
+            document.getElementById('ram-cost').textContent = cost;
+            
+            // Vérifier si l'utilisateur a assez de pièces
+            const canAfford = currentUser.coins >= cost;
+            document.getElementById('server-ram').style.borderColor = canAfford ? '' : '#e74c3c';
+        }
+        
+        // Créer un serveur
+        async function createServer() {
+            const name = document.getElementById('server-name').value.trim();
+            const type = document.getElementById('server-type').value;
+            const ram = parseInt(document.getElementById('server-ram').value);
+            const disk = parseInt(document.getElementById('server-disk').value);
+            const cpu = parseInt(document.getElementById('server-cpu').value);
+            
+            if (!name) {
+                alert('Veuillez donner un nom à votre serveur');
+                return;
+            }
+            
+            const cost = (ram / 1024) * 1000;
+            if (currentUser.coins < cost) {
+                alert(`Pièces insuffisantes ! Coût: ${cost} pièces, Vous avez: ${currentUser.coins} pièces`);
+                return;
+            }
+            
+            if (!confirm(`Créer le serveur "${name}" pour ${cost} pièces ?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/servers/create', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        type,
+                        ram,
+                        disk,
+                        cpu
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    
+                    // Mettre à jour les pièces
+                    currentUser.coins -= cost;
+                    localStorage.setItem('primeee_user', JSON.stringify(currentUser));
+                    updateUserInfo();
+                    
+                    // Recharger les serveurs
+                    loadServers();
+                    loadDashboard();
+                    
+                    // Retourner à la liste des serveurs
+                    showSection('servers');
+                } else {
+                    alert(data.error || 'Erreur création serveur');
+                }
+            } catch (error) {
+                console.error('Erreur création serveur:', error);
+                alert('Erreur de connexion');
+            }
+        }
+        
+        // Réclamer le bonus quotidien
+        async function claimDailyBonus() {
+            try {
+                const response = await fetch('/api/coins/daily', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    
+                    // Mettre à jour les pièces
+                    currentUser.coins += data.coins;
+                    localStorage.setItem('primeee_user', JSON.stringify(currentUser));
+                    updateUserInfo();
+                    
+                    // Recharger les transactions
+                    loadTransactions();
+                } else {
+                    alert(data.error || 'Erreur');
+                }
+            } catch (error) {
+                console.error('Erreur bonus quotidien:', error);
+                alert('Erreur de connexion');
+            }
+        }
+        
+        // Charger les transactions
+        async function loadTransactions() {
+            try {
+                const response = await fetch('/api/user/transactions', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const container = document.getElementById('transactions-list');
+                    if (!container) return;
+                    
+                    container.innerHTML = '';
+                    
+                    if (data.transactions.length === 0) {
+                        container.innerHTML = '<p style="color: #95a5a6;">Aucune transaction</p>';
+                        return;
+                    }
+                    
+                    data.transactions.forEach(transaction => {
+                        const amount = transaction.amount;
+                        const isPositive = amount > 0;
+                        
+                        container.innerHTML += `
+                            <div style="display: flex; justify-content: space-between; align-items: center;
+                                        padding: 15px; background: #34495e; margin-bottom: 10px; border-radius: 5px;">
+                                <div>
+                                    <div style="font-weight: bold;">${transaction.description}</div>
+                                    <div style="font-size: 0.8rem; color: #95a5a6;">
+                                        ${new Date(transaction.created_at).toLocaleString()}
+                                    </div>
+                                </div>
+                                <div style="color: ${isPositive ? '#2ecc71' : '#e74c3c'}; font-weight: bold;">
+                                    ${isPositive ? '+' : ''}${amount} pièces
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error('Erreur chargement transactions:', error);
+            }
+        }
+        
+        // Charger les parrainages
+        async function loadReferrals() {
+            try {
+                // Pour l'instant, utiliser les données de l'utilisateur
+                // TODO: API pour récupérer la liste des filleuls
+                
+                document.getElementById('total-referrals-count').textContent = currentUser.total_invites || 0;
+                document.getElementById('referral-earnings').textContent = (currentUser.total_invites || 0) * 100;
+                
+                const container = document.getElementById('referrals-list');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="color: #95a5a6; text-align: center; padding: 20px;">
+                            ${currentUser.total_invites > 0 
+                                ? `${currentUser.total_invites} filleul(s) - Total: ${currentUser.total_invites * 100} pièces`
+                                : 'Aucun filleul pour le moment'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erreur chargement parrainages:', error);
+            }
+        }
+        
+        // Copier le lien de parrainage
+        function copyReferralLink() {
+            const input = document.getElementById('referral-link');
+            input.select();
+            document.execCommand('copy');
+            alert('Lien copié !');
+        }
+        
+        // Mettre à jour les paramètres
+        async function updateSettings() {
+            const email = document.getElementById('settings-email').value;
+            const password = document.getElementById('settings-password').value;
+            
+            if (!email) {
+                alert('Email requis');
+                return;
+            }
+            
+            try {
+                // TODO: API pour mettre à jour les paramètres
+                alert('Fonctionnalité en développement');
+            } catch (error) {
+                console.error('Erreur mise à jour paramètres:', error);
+                alert('Erreur');
+            }
+        }
+        
+        // Gérer les modals
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Déconnexion
+        function logout() {
+            localStorage.removeItem('primeee_token');
+            localStorage.removeItem('primeee_user');
+            window.location.href = 'login.html';
+        }
+        
+        // Initialiser le coût de la RAM
+        updateRamCost();
+    </script>
+</body>
+</html>
