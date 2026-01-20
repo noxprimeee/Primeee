@@ -190,6 +190,117 @@
         </div>
     </section>
 
+    <!-- Déploiement Instantané Section -->
+    <section id="deploy" class="deploy-section">
+        <h2 class="section-title">🚀 Déploiement <span class="highlight">Gratuit</span></h2>
+        
+        <div class="deploy-container">
+            <div class="deploy-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-cloud-upload-alt"></i> Déployer en 1 clic</h3>
+                    <p>Pas de login, pas de configuration</p>
+                </div>
+                
+                <div class="deploy-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Nom du projet</label>
+                        <input type="text" id="projectName" placeholder="MonBotDiscord" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-code"></i> Langage</label>
+                        <select id="projectLanguage" class="form-select">
+                            <option value="node">Node.js (v14-20)</option>
+                            <option value="python">Python 3.9+</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java 17</option>
+                            <option value="go">Go 1.20+</option>
+                            <option value="rust">Rust</option>
+                            <option value="php">PHP 8.1</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-file-code"></i> Code source</label>
+                        <div class="code-editor-container">
+                            <textarea id="projectCode" rows="8" placeholder="// Colle ton code ici
+// Exemple Node.js:
+const http = require('http');
+const server = http.createServer((req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello from Primeee Host!');
+});
+server.listen(3000);"></textarea>
+                            <div class="editor-tools">
+                                <button onclick="formatCode()" class="btn-tool">
+                                    <i class="fas fa-broom"></i> Formater
+                                </button>
+                                <button onclick="clearCode()" class="btn-tool">
+                                    <i class="fas fa-trash"></i> Effacer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button id="deployBtn" class="btn-primary btn-lg">
+                            <i class="fas fa-rocket"></i> Déployer Maintenant
+                        </button>
+                        <button onclick="loadExample()" class="btn-secondary">
+                            <i class="fas fa-eye"></i> Voir un exemple
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line"></i> Statut Live</h3>
+                    <div class="status-indicator" id="globalStatus">
+                        <span class="status-dot online"></span>
+                        <span>Système: <strong>En ligne</strong></span>
+                    </div>
+                </div>
+                
+                <div class="status-content">
+                    <div id="deployStatus" class="status-message">
+                        <p><i class="fas fa-info-circle"></i> Prêt à déployer</p>
+                    </div>
+                    
+                    <div class="projects-list">
+                        <h4><i class="fas fa-list"></i> Projets Actifs</h4>
+                        <div id="projectsContainer" class="projects-container">
+                            <!-- Projets chargés dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h4>Déploiement Instantané</h4>
+                <p>Ton code est déployé en moins de 30 secondes</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-language"></i>
+                <h4>Multi-Langages</h4>
+                <p>Node.js, Python, Java, Go, Rust, PHP, etc.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Sécurisé</h4>
+                <p>Isolation Docker, pas d'accès entre projets</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-infinity"></i>
+                <h4>Gratuit à 100%</h4>
+                <p>Aucune limite, aucune carte bancaire</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -212,116 +323,6 @@
                 <a href="#">VPS</a>
                 <a href="#">Domains</a>
             </div>
-            <!-- Déploiement Instantané Section -->
-<section id="deploy" class="deploy-section">
-    <h2 class="section-title">🚀 Déploiement <span class="highlight">Gratuit</span></h2>
-    
-    <div class="deploy-container">
-        <div class="deploy-card">
-            <div class="card-header">
-                <h3><i class="fas fa-cloud-upload-alt"></i> Déployer en 1 clic</h3>
-                <p>Pas de login, pas de configuration</p>
-            </div>
-            
-            <div class="deploy-form">
-                <div class="form-group">
-                    <label><i class="fas fa-tag"></i> Nom du projet</label>
-                    <input type="text" id="projectName" placeholder="MonBotDiscord" class="form-input">
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-code"></i> Langage</label>
-                    <select id="projectLanguage" class="form-select">
-                        <option value="node">Node.js (v14-20)</option>
-                        <option value="python">Python 3.9+</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="java">Java 17</option>
-                        <option value="go">Go 1.20+</option>
-                        <option value="rust">Rust</option>
-                        <option value="php">PHP 8.1</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-file-code"></i> Code source</label>
-                    <div class="code-editor-container">
-                        <textarea id="projectCode" rows="8" placeholder="// Colle ton code ici
-// Exemple Node.js:
-const http = require('http');
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello from Primeee Host!');
-});
-server.listen(3000);"></textarea>
-                        <div class="editor-tools">
-                            <button onclick="formatCode()" class="btn-tool">
-                                <i class="fas fa-broom"></i> Formater
-                            </button>
-                            <button onclick="clearCode()" class="btn-tool">
-                                <i class="fas fa-trash"></i> Effacer
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button id="deployBtn" class="btn-primary btn-lg">
-                        <i class="fas fa-rocket"></i> Déployer Maintenant
-                    </button>
-                    <button onclick="loadExample()" class="btn-secondary">
-                        <i class="fas fa-eye"></i> Voir un exemple
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="status-card">
-            <div class="card-header">
-                <h3><i class="fas fa-chart-line"></i> Statut Live</h3>
-                <div class="status-indicator" id="globalStatus">
-                    <span class="status-dot online"></span>
-                    <span>Système: <strong>En ligne</strong></span>
-                </div>
-            </div>
-            
-            <div class="status-content">
-                <div id="deployStatus" class="status-message">
-                    <p><i class="fas fa-info-circle"></i> Prêt à déployer</p>
-                </div>
-                
-                <div class="projects-list">
-                    <h4><i class="fas fa-list"></i> Projets Actifs</h4>
-                    <div id="projectsContainer" class="projects-container">
-                        <!-- Projets chargés dynamiquement -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="features-grid">
-        <div class="feature">
-            <i class="fas fa-bolt"></i>
-            <h4>Déploiement Instantané</h4>
-            <p>Ton code est déployé en moins de 30 secondes</p>
-        </div>
-        <div class="feature">
-            <i class="fas fa-language"></i>
-            <h4>Multi-Langages</h4>
-            <p>Node.js, Python, Java, Go, Rust, PHP, etc.</p>
-        </div>
-        <div class="feature">
-            <i class="fas fa-shield-alt"></i>
-            <h4>Sécurisé</h4>
-            <p>Isolation Docker, pas d'accès entre projets</p>
-        </div>
-        <div class="feature">
-            <i class="fas fa-infinity"></i>
-            <h4>Gratuit à 100%</h4>
-            <p>Aucune limite, aucune carte bancaire</p>
-        </div>
-    </div>
-</section>
             <div class="footer-section">
                 <h4>Support</h4>
                 <a href="#">Documentation</a>
@@ -337,7 +338,7 @@ server.listen(3000);"></textarea>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; ©2026 𝚷𝚪𝚰𝚴𝚵𝚵𝚵 HOST. Tous droits réservés.</p>
+            <p>&copy; 2026 𝚷𝚪𝚰𝚴𝚵𝚵𝚵 HOST. Tous droits réservés.</p>
         </div>
     </footer>
 
