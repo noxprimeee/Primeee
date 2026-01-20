@@ -16,3 +16,18 @@
    - Build Command: `npm install`
    - Start Command: `node server.js`
 3. Variables d'environnement :
+
+## 🔧 Développement local
+
+```bash
+# Cloner le repo
+git clone https://github.com/noxprimeee/Primeee.git
+cd Primeee
+
+# Frontend
+open index.html  # Ou utilise un serveur local
+
+# Backend
+cd backend
+npm install
+npm start
