@@ -543,3 +543,254 @@ h1, h2, h3, h4 {
         transform: none;
     }
 }
+/* ============ SECTION DÉPLOIEMENT ============ */
+.deploy-section {
+    padding: 5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.deploy-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.deploy-card, .status-card {
+    background: var(--darker);
+    border: 1px solid var(--gray);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.deploy-card:hover, .status-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.card-header {
+    background: rgba(42, 42, 62, 0.8);
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.card-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.deploy-form {
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--light);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 1rem;
+    background: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    color: var(--light);
+    font-size: 1rem;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.code-editor-container {
+    position: relative;
+}
+
+.code-editor-container textarea {
+    width: 100%;
+    padding: 1rem;
+    background: #1a1a2e;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    color: #8be9fd;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 200px;
+}
+
+.editor-tools {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.btn-tool {
+    padding: 0.5rem 1rem;
+    background: var(--gray);
+    border: none;
+    border-radius: 5px;
+    color: var(--light);
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-tool:hover {
+    background: var(--primary);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-lg {
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    flex: 1;
+}
+
+/* Status Card */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.5rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.status-dot.online {
+    background: var(--success);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.status-content {
+    padding: 2rem;
+}
+
+.status-message {
+    background: rgba(42, 42, 62, 0.5);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--info);
+}
+
+.projects-list h4 {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.projects-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.project-item {
+    background: rgba(42, 42, 62, 0.5);
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-info h5 {
+    margin: 0;
+    color: var(--light);
+}
+
+.project-info p {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.project-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-online {
+    background: rgba(74, 222, 128, 0.2);
+    color: var(--success);
+}
+
+.status-deploying {
+    background: rgba(251, 191, 36, 0.2);
+    color: var(--warning);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.feature {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(42, 42, 62, 0.3);
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.feature:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.feature i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.feature h4 {
+    margin: 1rem 0;
+    color: var(--light);
+}
+
+.feature p {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
