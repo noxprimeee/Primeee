@@ -31,3 +31,13 @@ open index.html  # Ou utilise un serveur local
 cd backend
 npm install
 npm start
+---
+
+## 🚀 **ÉTAPES FINALES :**
+
+### **1. Copie tous ces fichiers** dans ton repo GitHub
+### **2. Commit et push :**
+```bash
+git add .
+git commit -m "Version complète Primeee Host avec frontend et backend"
+git push origin main
