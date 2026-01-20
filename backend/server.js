@@ -3,71 +3,45 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 
-let projects = {};
-
+// Route test
 app.get('/', (req, res) => {
-    res.json({
-        service: 'Primeee Host API',
-        version: '1.0.0',
+    res.json({ 
+        message: '🚀 Primeee Host API',
         status: 'online',
-        endpoints: ['POST /api/deploy', 'GET /api/status/:id', 'GET /api/projects']
+        version: '1.0.0'
     });
 });
 
+// API de déploiement simulé
 app.post('/api/deploy', (req, res) => {
     const { name, language, code } = req.body;
     
-    if (!code || !language) {
-        return res.status(400).json({ error: 'Code et langage requis' });
-    }
-    
-    const projectId = `proj_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    projects[projectId] = {
-        id: projectId,
-        name: name || `Projet_${Date.now()}`,
-        language,
-        status: 'deploying',
-        createdAt: new Date().toISOString(),
-        url: `https://${projectId}.primeee-host.app`,
-        stats: { cpu: '0%', ram: '0MB', uptime: '0s' }
-    };
-    
-    console.log(`Nouveau projet: ${projectId} (${language})`);
-    
-    setTimeout(() => {
-        projects[projectId].status = 'online';
-        projects[projectId].stats = {
-            cpu: `${Math.floor(Math.random() * 20 + 5)}%`,
-            ram: `${Math.floor(Math.random() * 512 + 256)}MB`,
-            uptime: '1m'
-        };
-    }, 3000);
+    console.log(`Nouveau déploiement: ${name} (${language})`);
     
     res.json({
         success: true,
-        message: 'Déploiement en cours',
-        projectId,
-        project: projects[projectId]
+        message: 'Déploiement simulé réussi',
+        projectId: `proj_${Date.now()}`,
+        project: {
+            id: `proj_${Date.now()}`,
+            name: name || 'Mon Projet',
+            language: language || 'node',
+            status: 'online',
+            url: `https://${name?.toLowerCase().replace(/\s+/g, '-')}.primeee.app`,
+            createdAt: new Date().toISOString()
+        }
     });
 });
 
-app.get('/api/status/:id', (req, res) => {
-    const project = projects[req.params.id];
-    if (!project) return res.status(404).json({ error: 'Projet non trouvé' });
-    res.json(project);
+// Health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
-app.get('/api/projects', (req, res) => {
-    res.json({
-        count: Object.keys(projects).length,
-        projects: Object.values(projects)
-    });
-});
-
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-    console.log(`🚀 API Primeee Host démarrée sur le port ${PORT}`);
+    console.log(`✅ API démarrée sur le port ${PORT}`);
+    console.log(`🌐 http://localhost:${PORT}`);
 });
